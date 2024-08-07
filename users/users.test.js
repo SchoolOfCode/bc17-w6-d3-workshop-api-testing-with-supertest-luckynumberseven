@@ -19,16 +19,19 @@ import { json } from "express/lib/response.js";
 //    console.log `response.body` for now to at least see a result ✅
 
 test("responds with json", async function () {
-  const response = await request(app).get("/api/health")//.set("Accept", "application/json");
-  console.log(response.headers);
-  // check if the request.body is enquals to the response.
+  const response = await request(app).get("/api/health"); //.set("Accept", "application/json");
+
+  // Ticket 5
+  // console.log(response.headers); // Debug code
+  // check if the request.body is equal to the response.
   expect(response.body).toEqual({
     success: true,
     payload: "API is running correctly",
   });
+
+  // Assert that the response status code is 200
   expect(response.status).toEqual(200);
-  //expect(response.headers["content-type"]).toEqual('application/json');
+
+  //Assert that the Content-Type response header contains application/json
   expect(response.headers["content-type"]).toMatch(/json/);
 });
-
-//Assert that the Content-Type response header contains application/json
