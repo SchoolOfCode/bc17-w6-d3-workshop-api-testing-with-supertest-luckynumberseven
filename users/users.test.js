@@ -1,6 +1,7 @@
 import { test, expect } from "vitest";
 import app from "../app.js";
 import request from "supertest";
+import { json } from "express/lib/response.js";
 
 // Ticket 3
 // Barebones test
@@ -18,12 +19,16 @@ import request from "supertest";
 //    console.log `response.body` for now to at least see a result ✅
 
 test("responds with json", async function () {
-  const response = await request(app).get("/api/health");
-  console.log(response.body);
+  const response = await request(app).get("/api/health")//.set("Accept", "application/json");
+  console.log(response.headers);
   // check if the request.body is enquals to the response.
   expect(response.body).toEqual({
     success: true,
     payload: "API is running correctly",
   });
   expect(response.status).toEqual(200);
+  //expect(response.headers["content-type"]).toEqual('application/json');
+  expect(response.headers["content-type"]).toMatch(/json/);
 });
+
+//Assert that the Content-Type response header contains application/json
