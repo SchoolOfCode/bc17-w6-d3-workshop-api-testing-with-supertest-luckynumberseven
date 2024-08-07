@@ -20,4 +20,10 @@ import request from "supertest";
 test("responds with json", async function () {
   const response = await request(app).get("/api/health");
   console.log(response.body);
+  // check if the request.body is enquals to the response.
+  expect(response.body).toEqual({
+    success: true,
+    payload: "API is running correctly",
+  });
+  expect(response.status).toEqual(200);
 });
